@@ -1,15 +1,20 @@
 #include <iostream>
-#include <iomanip>
 #include <fstream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <algorithm>
 #include <cmath>
 
 
+
 #include "Graphe.h"
 #include "Sommet.h"
 #include "Arrete.h"
+
+
+#include "svgfile.h"
+
 
 Graphe::Graphe()
 {
@@ -63,12 +68,14 @@ Graphe::Graphe()
         m_arretes.push_back(a);
     }
 
+
     VerifAdja();
 
 }
 
 void Graphe::VerifAdja()
 {
+
     for (unsigned int i=0; i<m_sommets.size(); i++)
     {
         for (unsigned int j=0; j<m_arretes.size(); j++)
@@ -86,10 +93,11 @@ void Graphe::VerifAdja()
     }
 }
 
+
 void Graphe::IndiceDegre()
 {
     std::ofstream SaveIndice1("C:/Users/Pierr/OneDrive/Documents/Cours ING2/Projet/SaveIndice1.txt");
-    ///tri de monsieur Fercoq utilisé lors du tp1
+    ///tri de monsieur Fercoq utilisÃ© lors du tp1
     std::sort(m_sommets.begin(), m_sommets.end(), [](Sommet* s1, Sommet* s2)
     {
         return s1->getDegre() > s2->getDegre();
@@ -114,6 +122,7 @@ void Graphe::IndiceDegre()
         std::cout<<"ERREUR"<<std::endl;
 
 }
+
 void Graphe::afficher()
 {
     std::cout << "Orientation : " << m_orientation << std::endl;
@@ -144,6 +153,27 @@ void Graphe::afficher()
         std::cout << "Adjacent au sommet " << i << std::endl;
         m_sommets[i]->afficherAdjacence();
     }
+
+}
+
+void Graphe::dessinerSVG(Svgfile &svgout)
+{
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        svgout.addDisk(m_sommets[i]->getX()*100,m_sommets[i]->getY()*100,20,"red");
+        svgout.addText(m_sommets[i]->getX()*100-5,m_sommets[i]->getY()*100+5,m_sommets[i]->getNom(),"black");
+    }
+
+    for (unsigned int i=0;i<m_arretes.size();i++)
+    {
+        svgout.addLine(m_sommets[m_arretes[i]->getExtre1()]->getX()*100,
+                       m_sommets[m_arretes[i]->getExtre1()]->getY()*100,
+                       m_sommets[m_arretes[i]->getExtre2()]->getX()*100,
+                       m_sommets[m_arretes[i]->getExtre2()]->getY()*100,
+                       "red");
+    }
+
     std::cout<<"Tri des degres par ordre decroissant"<<std::endl;
     IndiceDegre();
+
 }

@@ -3,12 +3,18 @@
 
 #include <vector>
 
+#include <string>
+
+
 class Sommet
 {
     private :
 
         int m_indice;
-        char m_nom;
+
+        std::string m_nom;
+
+
         int m_x;
         int m_y;
         std::vector<Sommet*> m_adjacence;
@@ -24,10 +30,15 @@ class Sommet
         void ajouterAdjacence(Sommet *a);
 
         int getIndice();
-        int getDegre()const;
-        char getNom()const;
+
+        int getX();
+        int getY();
+        std::string getNom()const;
 
         void afficherAdjacence();
+
+        int getDegre()const;
+    
         void afficher();
 };
 
