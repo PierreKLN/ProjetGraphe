@@ -1,0 +1,6 @@
+Tri par ordre de degres
+Indice sommet C: 2 et de degre 4
+Indice sommet A: 0 et de degre 1
+Indice sommet B: 1 et de degre 1
+Indice sommet D: 3 et de degre 1
+Indice sommet E: 4 et de degre 1

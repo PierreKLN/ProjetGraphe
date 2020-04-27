@@ -1,15 +1,24 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cmath>
+
+
 
 #include "Graphe.h"
 #include "Sommet.h"
 #include "Arrete.h"
 
+
 #include "svgfile.h"
+
 
 Graphe::Graphe()
 {
-    std::ifstream fichier ("graphe2.txt");
+    std::ifstream fichier ("graphe.txt");
 
     fichier >> m_orientation;
     fichier >> m_ordre;
@@ -59,6 +68,14 @@ Graphe::Graphe()
         m_arretes.push_back(a);
     }
 
+
+    VerifAdja();
+
+}
+
+void Graphe::VerifAdja()
+{
+
     for (unsigned int i=0; i<m_sommets.size(); i++)
     {
         for (unsigned int j=0; j<m_arretes.size(); j++)
@@ -74,6 +91,36 @@ Graphe::Graphe()
             }
         }
     }
+}
+
+
+void Graphe::IndiceDegre()
+{
+    std::ofstream SaveIndice1("C:/Users/Pierr/OneDrive/Documents/Cours ING2/Projet/SaveIndice1.txt");
+    ///tri de monsieur Fercoq utilisé lors du tp1
+    std::sort(m_sommets.begin(), m_sommets.end(), [](Sommet* s1, Sommet* s2)
+    {
+        return s1->getDegre() > s2->getDegre();
+    });
+
+    for (size_t i =0; i<m_sommets.size(); ++i)
+    {
+        std::cout<<m_sommets[i]->getDegre()<<std::endl;
+    }
+
+    if(SaveIndice1)
+    {
+        SaveIndice1<<"Tri par ordre de degres"<<std::endl;
+        for (size_t i =0; i<m_sommets.size(); ++i)
+        {
+
+            SaveIndice1<<"Indice sommet "<<m_sommets[i]->getNom()<<": "<<m_sommets[i]->getIndice()
+            <<" et de degre "<<m_sommets[i]->getDegre()<<std::endl;
+        }
+    }
+    else
+        std::cout<<"ERREUR"<<std::endl;
+
 }
 
 void Graphe::afficher()
@@ -106,6 +153,7 @@ void Graphe::afficher()
         std::cout << "Adjacent au sommet " << i << std::endl;
         m_sommets[i]->afficherAdjacence();
     }
+
 }
 
 void Graphe::dessinerSVG(Svgfile &svgout)
@@ -124,4 +172,8 @@ void Graphe::dessinerSVG(Svgfile &svgout)
                        m_sommets[m_arretes[i]->getExtre2()]->getY()*100,
                        "red");
     }
+
+    std::cout<<"Tri des degres par ordre decroissant"<<std::endl;
+    IndiceDegre();
+
 }

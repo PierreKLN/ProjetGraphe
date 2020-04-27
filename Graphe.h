@@ -3,7 +3,9 @@
 
 #include <vector>
 
+
 #include "svgfile.h"
+
 
 class Sommet;
 class Arrete;
@@ -22,7 +24,11 @@ class Graphe
 
         Graphe();
         void afficher();
+
         void dessinerSVG(Svgfile &svgout);
+
+        void VerifAdja();
+        void IndiceDegre();
 };
 
 #endif // GRAPHE_H_INCLUDED

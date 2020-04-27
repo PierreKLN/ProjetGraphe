@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "Sommet.h"
-
+#include <string>
 Sommet::Sommet()
 {
 
@@ -52,6 +52,7 @@ std::string Sommet::getNom()const
     return m_nom;
 }
 
+
 void Sommet::afficher()
 {
     std::cout << "Indice : " << m_indice << std::endl;
@@ -67,3 +68,9 @@ void Sommet::afficherAdjacence()
         m_adjacence[i]->afficher();
     }
 }
+
+
+int Sommet::getDegre() const
+    {
+        return (int)m_adjacence.size();
+    }
