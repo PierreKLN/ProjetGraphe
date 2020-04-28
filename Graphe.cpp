@@ -18,7 +18,7 @@
 
 Graphe::Graphe()
 {
-    std::ifstream fichier ("graphe.txt");
+    std::ifstream fichier ("graphe2.txt");
 
     fichier >> m_orientation;
     fichier >> m_ordre;
@@ -96,7 +96,7 @@ void Graphe::VerifAdja()
 
 void Graphe::IndiceDegre()
 {
-    std::ofstream SaveIndice1("C:/Users/Pierr/OneDrive/Documents/Cours ING2/Projet/SaveIndice1.txt");
+    std::ofstream SaveIndice1("C:/Users/Pierr/OneDrive/Documents/GitHub/ProjetGraphe/SaveIndice1.txt");
     ///tri de monsieur Fercoq utilisé lors du tp1
     std::sort(m_sommets.begin(), m_sommets.end(), [](Sommet* s1, Sommet* s2)
     {
@@ -154,6 +154,9 @@ void Graphe::afficher()
         m_sommets[i]->afficherAdjacence();
     }
 
+     std::cout<<"Tri des degres par ordre decroissant"<<std::endl;
+    IndiceDegre();
+
 }
 
 void Graphe::dessinerSVG(Svgfile &svgout)
@@ -173,7 +176,5 @@ void Graphe::dessinerSVG(Svgfile &svgout)
                        "red");
     }
 
-    std::cout<<"Tri des degres par ordre decroissant"<<std::endl;
-    IndiceDegre();
 
 }
