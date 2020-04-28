@@ -9,14 +9,15 @@
 #include "Graphe.h"
 #include "Sommet.h"
 #include "Arrete.h"
-
 #include "svgfile.h"
+
+#define MAX 9999
 
     //Test
 
 Graphe::Graphe()
 {
-    std::ifstream fichier ("graphe2.txt");
+    std::ifstream fichier ("graphe.txt");
 
     fichier >> m_orientation;
     fichier >> m_ordre;
@@ -68,6 +69,7 @@ Graphe::Graphe()
 
 
     VerifAdja();
+    lecturePoids();
 
 }
 
@@ -119,6 +121,41 @@ void Graphe::IndiceDegre()
     else
         std::cout<<"ERREUR"<<std::endl;
 
+}
+
+void Graphe::lecturePoids()
+{
+    std::ifstream fichier ("poids.txt");
+    int poids;
+    for (int i=0; i<m_taille; ++i)
+
+        {
+            fichier>>poids;
+            m_arretes[i]->ajouterPoids(poids);
+        }
+
+
+}
+
+int Graphe::getProchaineArrete()
+{
+    ///distance mini tout d'abord initialisé au maximum
+    int mini= MAX;
+    int ProchaineArrete =0;
+    std::vector<Arrete*>::iterator i;
+    ///on parcours la taille de m_arrete
+    for (size_t i=0; i<m_arretes.size(); ++i)
+    {
+        ///on fait le tri dans le tableau pour trouver la plus petite longueur parmis les sommets non visité
+        if(m_arretes[i]->getLongueur() < mini && m_arretes[i]->getVisite()==0)
+        {///prochain sommet prends la valeur du sommet au quel on s'est arrete une fois rentré dans le if
+            ProchaineArrete=i;
+            ///et mini prends donc la nouvelle valeur, au fur et a mesure on trouvera au final la plus petite longueur
+            mini=m_arretes[i]->getLongueur();
+        }
+    }
+///on retourne le prochain sommet auquel on va se rendre
+    return ProchaineArrete;
 }
 
 void Graphe::afficher()

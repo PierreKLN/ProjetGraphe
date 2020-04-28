@@ -17,6 +17,7 @@ class Sommet
 
         int m_x;
         int m_y;
+        int m_precedent;
         std::vector<Sommet*> m_adjacence;
 
     public :
@@ -34,11 +35,13 @@ class Sommet
         int getX();
         int getY();
         std::string getNom()const;
+        int getPrecedent() const;
 
         void afficherAdjacence();
-
+        void setPrecedent(int precedent);
         int getDegre()const;
-    
+        std::vector<Sommet*> getAdja(int i);
+
         void afficher();
 };
 

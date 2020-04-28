@@ -22,6 +22,11 @@ void Arrete::ajouterExtrem2(int deux)
     m_extre2 = deux;
 }
 
+void Arrete::ajouterPoids (int poids)
+{
+   m_poids.push_back(poids);
+}
+
 int Arrete::getExtre1()
 {
     return m_extre1;
@@ -31,10 +36,27 @@ int Arrete::getExtre2()
 {
     return m_extre2;
 }
-
+std::vector<int> Arrete::getPoids()
+{
+    return m_poids;
+}
 void Arrete::afficher()
 {
     std::cout << "Indice : " << m_indice << std::endl;
     std::cout << "Extremite 1 : " << m_extre1 << std::endl;
     std::cout << "Extremite 2 : " << m_extre2 << std::endl;
+
+    for (size_t i = 0; i<m_poids.size();++i)
+    {
+        std::cout<<"Poids : "<<m_poids[i]<<std::endl;
+    }
+}
+
+bool Arrete::getVisite()const
+{
+    return m_visite;
+}
+int Arrete::getLongueur()const
+{
+    return m_longueur;
 }

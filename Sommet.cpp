@@ -51,8 +51,19 @@ std::string Sommet::getNom()const
 {
     return m_nom;
 }
+ int Sommet::getPrecedent()const
+ {
+     return m_precedent;
+ }
 
-
+ void Sommet::setPrecedent(int precedent)
+ {
+     m_precedent=precedent;
+ }
+std::vector<Sommet*> Sommet::getAdja(int i)
+{
+    return m_adjacence;
+}
 void Sommet::afficher()
 {
     std::cout << "Indice : " << m_indice << std::endl;
