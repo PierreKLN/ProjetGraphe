@@ -89,3 +89,22 @@ int Sommet::getDegre() const
     {
         return (int)m_adjacence.size();
     }
+
+    bool Sommet::getVisite()const
+{
+    return m_visite;
+}
+int Sommet::getLongueur()const
+{
+    return m_longueur;
+}
+
+void Sommet::setVisite(bool visite)
+{
+    m_visite=visite;
+}
+
+void Sommet::setLongueur(int longueur)
+{
+    m_longueur=longueur;
+}

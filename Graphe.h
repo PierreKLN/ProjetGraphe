@@ -31,8 +31,8 @@ class Graphe
 
         void IndiceDegre();
 
-
-        int getProchaineArrete();
+        void CentraliteProximite(int debut, int fin);
+        int getProchainSommet();
 
         void vecteurPropre();
 

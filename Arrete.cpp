@@ -36,9 +36,9 @@ int Arrete::getExtre2()
 {
     return m_extre2;
 }
-std::vector<int> Arrete::getPoids()
+int Arrete::getPoids(int i)
 {
-    return m_poids;
+    return m_poids[i];
 }
 void Arrete::afficher()
 {
@@ -52,11 +52,4 @@ void Arrete::afficher()
     }
 }
 
-bool Arrete::getVisite()const
-{
-    return m_visite;
-}
-int Arrete::getLongueur()const
-{
-    return m_longueur;
-}
+

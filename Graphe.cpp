@@ -175,25 +175,69 @@ void Graphe::lecturePoids()
 
 }
 
-int Graphe::getProchaineArrete()
+int Graphe::getProchainSommet()
 {
     ///distance mini tout d'abord initialisé au maximum
     int mini= MAX;
-    int ProchaineArrete =0;
-    std::vector<Arrete*>::iterator i;
-    ///on parcours la taille de m_arrete
-    for (size_t i=0; i<m_arretes.size(); ++i)
+    int ProchainSommet =0;
+    std::vector<Sommet*>::iterator i;
+    ///on parcours la taille de m_Sommet
+    for (size_t i=0; i<m_sommets.size(); ++i)
     {
         ///on fait le tri dans le tableau pour trouver la plus petite longueur parmis les sommets non visité
-        if(m_arretes[i]->getLongueur() < mini && m_arretes[i]->getVisite()==0)
-        {///prochain sommet prends la valeur du sommet au quel on s'est arrete une fois rentré dans le if
-            ProchaineArrete=i;
+        if(m_sommets[i]->getLongueur() < mini && m_sommets[i]->getVisite()==0)
+        {///prochain sommet prends la valeur du sommet au quel on s'est Sommet une fois rentré dans le if
+            ProchainSommet=i;
             ///et mini prends donc la nouvelle valeur, au fur et a mesure on trouvera au final la plus petite longueur
-            mini=m_arretes[i]->getLongueur();
+            mini=m_sommets[i]->getLongueur();
         }
     }
 ///on retourne le prochain sommet auquel on va se rendre
-    return ProchaineArrete;
+    return ProchainSommet;
+}
+
+void Graphe::CentraliteProximite(int debut, int fin)
+{
+    ///sommet le plus proche du sommet auquel on se situe
+    int ProchainSommet;
+
+    std::vector<Sommet*> recuperation;
+    std::vector<int> indice;
+
+    for (int i=0;i<m_sommets.size();i++)
+    {
+        recuperation = m_sommets[i]->getAdjacence();
+        indice[i] = recuperation[i]->getIndice();
+
+    }
+
+///parcours automatique de tous les sommets
+for(auto s : m_sommets)
+    {
+        ///prochain sommet prends la valeur du prochain sommet grace au getter
+        ProchainSommet=getProchainSommet();
+        ///on dit que le prochain sommet est visite
+        m_sommets[ProchainSommet]->setVisite(true);
+        ///parcours en fonction du degre du prochain sommet
+        for(int i=0; i<m_sommets[ProchainSommet]->getDegre(); ++i)
+        {
+            ///si la longueur de l'adjacent est superieure a la longueur du prochain sommet plus son poids
+            if(m_sommets[m_sommets[ProchainSommet]->indice(i)]->getLongueur()>m_sommets[ProchainSommet]->getLongueur()+m_sommets[ProchainSommet]->getPoids(i))
+            {///si les indicecents du prochain sommet n'ont pas ete visites
+                if(m_sommets[m_sommets[ProchainSommet]->indice(i)]->getVisite()==0)
+                {
+                   ///alors l'adjacent va prendre la valeur du prochain sommet plus son poids
+                    m_sommets[m_sommets[ProchainSommet]->indice(i)]->setLongueur(m_sommets[ProchainSommet]->getLongueur()+m_sommets[ProchainSommet]->getPoids(i));
+                    ///puis on note son predecesseur
+                    m_sommets[m_sommets[ProchainSommet]->indice(i)]->setPrecedent(ProchainSommet);
+
+                }
+            }
+        }
+
+    }
+    ///permet d'afficher la totalité des informations
+    afficherTout(fin);
 }
 
 void Graphe::afficher()

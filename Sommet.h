@@ -12,6 +12,8 @@ class Sommet
 
         int m_indice;
         std::string m_nom;
+         int m_longueur;
+        bool m_visite;
         int m_x;
         int m_y;
         int m_precedent;
@@ -33,8 +35,12 @@ class Sommet
         std::string getNom()const;
 
         int getPrecedent() const;
-
+          int getLongueur() const;
+        bool getVisite() const;
         std::vector<Sommet*> getAdjacence();
+
+        void setLongueur(int longueur);
+        void setVisite(bool visite);
 
         void afficherAdjacence();
         void setPrecedent(int precedent);
