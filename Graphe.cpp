@@ -12,8 +12,6 @@
 
 #include "svgfile.h"
 
-    //Test
-
 Graphe::Graphe()
 {
     std::ifstream fichier ("graphe2.txt");
@@ -66,14 +64,11 @@ Graphe::Graphe()
         m_arretes.push_back(a);
     }
 
-
     VerifAdja();
-
 }
 
 void Graphe::VerifAdja()
 {
-
     for (unsigned int i=0; i<m_sommets.size(); i++)
     {
         for (unsigned int j=0; j<m_arretes.size(); j++)
@@ -91,10 +86,10 @@ void Graphe::VerifAdja()
     }
 }
 
-
 void Graphe::IndiceDegre()
 {
-    std::ofstream SaveIndice1("C:/Users/Pierr/OneDrive/Documents/GitHub/ProjetGraphe/SaveIndice1.txt");
+    std::ofstream fichier("centraliteDegre.txt");
+
     ///tri de monsieur Fercoq utilisé lors du tp1
     std::sort(m_sommets.begin(), m_sommets.end(), [](Sommet* s1, Sommet* s2)
     {
@@ -106,19 +101,57 @@ void Graphe::IndiceDegre()
         std::cout<<m_sommets[i]->getDegre()<<std::endl;
     }
 
-    if(SaveIndice1)
+    if(fichier)
     {
-        SaveIndice1<<"Tri par ordre de degres"<<std::endl;
+        fichier<<"Tri par ordre de degres"<<std::endl<<std::endl;
         for (size_t i =0; i<m_sommets.size(); ++i)
         {
 
-            SaveIndice1<<"Indice sommet "<<m_sommets[i]->getNom()<<": "<<m_sommets[i]->getIndice()
+            fichier<<"Indice sommet "<<m_sommets[i]->getNom()<<": "<<m_sommets[i]->getIndice()
             <<" et de degre "<<m_sommets[i]->getDegre()<<std::endl;
         }
     }
     else
         std::cout<<"ERREUR"<<std::endl;
+}
 
+void Graphe::vecteurPropre()
+{
+    std::vector<float> vp;
+    float sommeDegreSi = 0;
+    float lambda;
+    std::vector<float> centraliteVecteur;
+
+    std::ofstream fichier("centraliteVecteurPropre.txt");
+
+    for(unsigned int i=0;i<m_sommets.size();i++)
+    {
+        vp.push_back(1); //Initialisation a 1
+        vp[i] = m_sommets[i]->getAdjacence().size(); //Somme des indices de ses voisins
+
+        sommeDegreSi += vp[i]*vp[i]; //Somme de tous les sommes vecteurs voisins
+    }
+
+    //Calcul de Lambda
+
+    lambda = sqrt(sommeDegreSi*sommeDegreSi); //Racine carre du carre de la somme des indices des sommets
+
+    for (unsigned int i =0;i<m_sommets.size();i++)
+    {
+        centraliteVecteur.push_back(vp[i]/lambda); //Valeur de la centralite vecteur propre pour chaque sommet
+        std::cout << centraliteVecteur[i] << std::endl;
+    }
+
+    if(fichier)
+    {
+        fichier << "Etude de la centralite de vecteur propre : " << std::endl << std::endl;
+
+        for (unsigned int i=0;i<m_sommets.size();i++)
+        {
+            fichier << "Sommet " << m_sommets[i]->getNom() << " d'indice " << i
+            << " : Coefficient centralite VP " << centraliteVecteur[i] << std::endl;
+        }
+    }
 }
 
 void Graphe::afficher()
@@ -154,7 +187,6 @@ void Graphe::afficher()
 
      std::cout<<"Tri des degres par ordre decroissant"<<std::endl;
     IndiceDegre();
-
 }
 
 void Graphe::dessinerSVG(Svgfile &svgout)
@@ -173,6 +205,4 @@ void Graphe::dessinerSVG(Svgfile &svgout)
                        m_sommets[m_arretes[i]->getExtre2()]->getY()*100,
                        "red");
     }
-
-
 }

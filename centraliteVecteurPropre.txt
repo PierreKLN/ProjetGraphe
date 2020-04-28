@@ -1,0 +1,11 @@
+Etude de la centralite de vecteur propre : 
+
+Sommet A d'indice 0 : Coefficient centralite VP 0.0238095
+Sommet B d'indice 1 : Coefficient centralite VP 0.0238095
+Sommet C d'indice 2 : Coefficient centralite VP 0.0238095
+Sommet D d'indice 3 : Coefficient centralite VP 0.0952381
+Sommet E d'indice 4 : Coefficient centralite VP 0.047619
+Sommet F d'indice 5 : Coefficient centralite VP 0.0952381
+Sommet G d'indice 6 : Coefficient centralite VP 0.0238095
+Sommet H d'indice 7 : Coefficient centralite VP 0.0238095
+Sommet I d'indice 8 : Coefficient centralite VP 0.0238095

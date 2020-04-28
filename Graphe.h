@@ -28,7 +28,9 @@ class Graphe
         void dessinerSVG(Svgfile &svgout);
 
         void VerifAdja();
+
         void IndiceDegre();
+        void vecteurPropre();
 };
 
 #endif // GRAPHE_H_INCLUDED

@@ -52,6 +52,10 @@ std::string Sommet::getNom()const
     return m_nom;
 }
 
+std::vector<Sommet*> Sommet::getAdjacence()
+{
+    return m_adjacence;
+}
 
 void Sommet::afficher()
 {

@@ -9,10 +9,9 @@
 int main()
 {
     Graphe a;
-    Svgfile svgout;
 
-    a.dessinerSVG(svgout);
-    a.afficher();
+    a.vecteurPropre();
+    a.IndiceDegre();
 
     return 0;
 }
