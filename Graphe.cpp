@@ -6,16 +6,13 @@
 #include <algorithm>
 #include <cmath>
 
-
-
 #include "Graphe.h"
 #include "Sommet.h"
 #include "Arrete.h"
 
-
 #include "svgfile.h"
 
-    //Test Github
+    //Test
 
 Graphe::Graphe()
 {
