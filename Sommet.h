@@ -11,10 +11,7 @@ class Sommet
     private :
 
         int m_indice;
-
         std::string m_nom;
-
-
         int m_x;
         int m_y;
         int m_precedent;
@@ -31,16 +28,18 @@ class Sommet
         void ajouterAdjacence(Sommet *a);
 
         int getIndice();
-
         int getX();
         int getY();
         std::string getNom()const;
+
         int getPrecedent() const;
+
+        std::vector<Sommet*> getAdjacence();
 
         void afficherAdjacence();
         void setPrecedent(int precedent);
         int getDegre()const;
-        std::vector<Sommet*> getAdja(int i);
+
 
         void afficher();
 };
