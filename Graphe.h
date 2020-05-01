@@ -58,6 +58,9 @@ class Graphe
 
         void centraliteIntermdiariteSimple(int indice);
 
+        void SuppressionArete(int indice);
+        void Vulnerabilite();
+
 
 };
 

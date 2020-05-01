@@ -46,10 +46,11 @@ int main()
 
 
     //a.centraliteDijkstra();
-      a.centraliteIntermdiariteSimple(2);
+      //a.centraliteIntermdiariteSimple(2);
     //a.centraliteDegre();
     //a.afficherCentraliteDegre();
     //a.centraliteVecteurPropre();
+    a.Vulnerabilite();
 
     return 0;
 }

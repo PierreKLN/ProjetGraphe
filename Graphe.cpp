@@ -140,6 +140,11 @@ void Graphe::centraliteDegre()
         return s1->getNombreVoisins() > s2->getNombreVoisins();
     });
 
+    for(size_t i=0; i<m_sommets.size(); ++i)
+    {
+        std::cout<<m_sommets[i]->getNombreVoisins()<<std::endl;
+    }
+
     if(fichier)
     {
         fichier<<"Tri par ordre de degres"<<std::endl<<std::endl;
@@ -442,16 +447,40 @@ void Graphe::centraliteIntermdiariteSimple(int indice)
             if(i!=j)
                 initDijkstra(i,j);
         }
+      if(m_sommets[indice]->getPrecedent()!=-1)
+      {
+          if(m_sommets[i]->getPrecedent()==m_sommets[indice]->getIndice())
+                std::cout<<"test";
+      }
 
-        if(m_sommets[i]->getPrecedent()==m_sommets[indice]->getIndice())
-                std::cout<<"ok";
 
 
     }
    // std::cout<<"Inter vaut : "<<centraliteInter<<std::endl;
 }
 
+void Graphe::SuppressionArete(int indice)
+{
+    delete m_aretes[indice];
+}
 
+void Graphe::Vulnerabilite()
+{
+    int indice;
+    centraliteDegre();
+    std::cout<<"Choisissez le numero de l'arrete à supprimer"<<std::endl;
+    std::cin>>indice;
+    SuppressionArete(indice);
+    std::sort(m_sommets.begin(), m_sommets.end(), [](Sommet *s1, Sommet *s2)
+    {
+        return s1->getNombreVoisins() > s2->getNombreVoisins();
+    });
+    std::cout<<"Classement indice degre apres supression d'une arrete: "<<std::endl;
+    for(size_t i=0; i<m_sommets.size();++i)
+    {
+        std::cout<<m_sommets[i]->getNombreVoisins()<<std::endl;
+    }
+}
 
 
 
