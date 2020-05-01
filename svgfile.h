@@ -5,6 +5,11 @@
 #include <fstream>
 #include <set>
 
+#include "Graphe.h"
+
+#include "Sommet.h"
+#include "Arete.h"
+
 constexpr char defcol[] = "black";
 
 class Svgfile
