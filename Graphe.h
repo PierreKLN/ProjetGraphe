@@ -2,13 +2,14 @@
 #define GRAPHE_H_INCLUDED
 
 #include <vector>
+#include <string>
 
+#include "Sommet.h"
+#include "Arete.h"
 
-#include "svgfile.h"
+#include "Svgfile.h"
 
-
-class Sommet;
-class Arrete;
+class Svgfile;
 
 class Graphe
 {
@@ -17,18 +18,47 @@ class Graphe
         int m_orientation;
         int m_ordre;
         int m_taille;
+
         std::vector<Sommet*> m_sommets;
-        std::vector<Arrete*> m_arretes;
+        std::vector<Arete*> m_aretes;
+        std::vector <double> m_compteur;
 
     public :
 
-        Graphe();
-        void afficher();
+        Graphe(std::string nom);
+
+        ~Graphe();
+
+        void lirePoids();
+
+        int getOrientation();
+        int getOrdre();
+        int getTaille();
+
+        int retournePoids(int a, int b);
+
+        int getNextSommet();
+        void initDijkstra(unsigned int debut, unsigned int fin);
+        void dijkstra(unsigned int debut, unsigned int fin);
+        void afficherTout(unsigned int sommet);
+        void recupSommePoids(unsigned int i);
+
+        void centraliteDegre();
+        void centraliteVecteurPropre();
+        void centraliteDijkstra();
+
+        void afficherCentraliteDegre();
+        void afficherCentraliteVecteurPropre();
+        void afficherCentraliteProximite();
 
         void dessinerSVG(Svgfile &svgout);
 
-        void VerifAdja();
-        void IndiceDegre();
+        void setCompteur(double i);
+        int CalculIndice(int &courtChemin, int num);
+
+        void centraliteIntermdiariteSimple(int indice);
+
+
 };
 
 #endif // GRAPHE_H_INCLUDED

@@ -1,35 +1,10 @@
 #include <iostream>
 
 #include "Sommet.h"
-#include <string>
-Sommet::Sommet()
+
+Sommet::Sommet():m_precedent{-1}
 {
 
-}
-
-void Sommet::ajouterIndice(int a)
-{
-    m_indice = a;
-}
-
-void Sommet::ajouterNom(char a)
-{
-    m_nom = a;
-}
-
-void Sommet::ajouterX(int x)
-{
-    m_x = x;
-}
-
-void Sommet::ajouterY(int y)
-{
-    m_y = y;
-}
-
-void Sommet::ajouterAdjacence(Sommet *a)
-{
-    m_adjacence.push_back(a);
 }
 
 int Sommet::getIndice()
@@ -37,6 +12,10 @@ int Sommet::getIndice()
     return m_indice;
 }
 
+std::string Sommet::getNom()
+{
+    return m_nom;
+}
 int Sommet::getX()
 {
     return m_x;
@@ -47,30 +26,94 @@ int Sommet::getY()
     return m_y;
 }
 
-std::string Sommet::getNom()const
+int Sommet::getLongueur()
 {
-    return m_nom;
+    return m_longueur;
 }
 
+int Sommet::getPrecedent()
+{
+    return m_precedent;
+}
+
+bool Sommet::getVisite()
+{
+    return m_visite;
+}
+
+int Sommet::getPoids(int i)
+{
+    return m_poids[i];
+}
+
+float Sommet::getNombreVoisins()
+{
+    return m_adjacents.size();
+}
+
+int Sommet::getIndiceAdjacence(int i)
+{
+    return m_adjacents[i];
+}
+
+void Sommet::setIndice(int indice)
+{
+    m_indice = indice;
+}
+
+void Sommet::setNom(std::string nom)
+{
+    m_nom = nom;
+}
+
+void Sommet::setX(int x)
+{
+    m_x = x;
+}
+void Sommet::setY(int y)
+{
+    m_y = y;
+}
+
+void Sommet::setLongueur(int longueur)
+{
+    m_longueur = longueur;
+}
+
+void Sommet::setPrecedent(int precedent)
+{
+    m_precedent = precedent;
+}
+
+void Sommet::setVisite(bool visite)
+{
+    m_visite = visite;
+}
+
+void Sommet::setAdjacent(int indice)
+{
+    m_adjacents.push_back(indice);
+}
+
+void Sommet::setPoids(int poids)
+{
+    m_poids.push_back(poids);
+}
 
 void Sommet::afficher()
 {
-    std::cout << "Indice : " << m_indice << std::endl;
-    std::cout << "Nom : " << m_nom << std::endl;
-    std::cout << "X : " << m_x << std::endl;
-    std::cout << "Y : " << m_y << std::endl;
+    std::cout << m_indice << std::endl;
 }
 
-void Sommet::afficherAdjacence()
+void Sommet::afficherSommet()
 {
-    for (unsigned int i=0; i<m_adjacence.size();i++)
+    for (unsigned int i=0;i<m_adjacents.size();i++)
     {
-        m_adjacence[i]->afficher();
+        std::cout << m_adjacents[i] << std::endl;
     }
+    for (unsigned int i=0;i<m_poids.size();i++)
+    {
+        std::cout << m_poids[i] << std::endl;
+    }
+    std::cout << std::endl;
 }
-
-
-int Sommet::getDegre() const
-    {
-        return (int)m_adjacence.size();
-    }
