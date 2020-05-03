@@ -147,3 +147,4 @@ int Sommet::getInter()
 {
     return m_inter;
 }
+

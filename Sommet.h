@@ -21,6 +21,7 @@ class Sommet
         std::vector<int> m_adjacents;
         std::vector<int> m_NewAdja;
         std::vector<int> m_poids;
+        std::vector<float> m_vecteurPropre;
         std::vector <int> m_suivant;
 
 
@@ -61,6 +62,7 @@ class Sommet
 
         void afficher();
         void afficherSommet();
+
 
 };
 

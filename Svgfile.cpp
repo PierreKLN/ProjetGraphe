@@ -121,21 +121,34 @@ void Svgfile::addCross(double x, double y, double span, std::string color)
     addLine(x-span, y+span, x+span, y-span, color);
 }
 
-void Svgfile::addText(double x, double y, std::string text, std::string color)
+void Svgfile::addText(double x, double y, float ep, std::string text, std::string color)
 {
 
     m_ostrm << "<text "
             << attrib("x", x)
             << attrib("y", y)
+            << attrib("font-size", ep )
             << attrib("fill", color)
             << ">" << text << "</text>\n";
 }
-void Svgfile::addText(double x, double y, int text, std::string color)
+void Svgfile::addText(double x, double y, float ep, float text, std::string color)
 {
     /// <text x="180" y="60">Un texte</text>
     m_ostrm << "<text "
             << attrib("x", x)
             << attrib("y", y)
+             << attrib("font-size", ep )
+            << attrib("fill", color)
+            << ">" << text << "</text>\n";
+}
+void Svgfile::addText2(double x, double y, float ep, std::string pos, float text, std::string color)
+{
+    /// <text x="180" y="60">Un texte</text>
+    m_ostrm << "<text "
+            << attrib("x", x)
+            << attrib("y", y)
+             << attrib("font-size", ep )
+             <<attrib("anchor", pos)
             << attrib("fill", color)
             << ">" << text << "</text>\n";
 }

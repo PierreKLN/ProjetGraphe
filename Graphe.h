@@ -24,7 +24,8 @@ class Graphe
         std::vector<Arete*> m_aretes;
         std::vector <double> m_compteur;
         std::vector <int> m_stockSommet;
-        std::list<int> m_indice;
+        std::vector<float> m_centraliteVecteur;
+        std::vector <double> m_indiceProximite;
 
     public :
 
@@ -60,7 +61,11 @@ class Graphe
         void SuppressionArete();
         void parcoursBFS(int depart);
         void afficherCompoConnexe(Sommet *sommet);
+        void dessinerSVGDegre();
+        void dessinerSVGVecteur();
+        void dessinerSVGProximite();
         void dessinerSVG();
+        void NewdessinerSVGDegre();
         void afficherGraphe();
 
 

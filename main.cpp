@@ -10,20 +10,15 @@ void menuActionCentralite();
 int main()
 {
     Graphe a;
-   //a.remplirGraphe("graphe2.txt");
-   //a.lirePoids("poids2.txt");
-    //a.vulnerabilite();
-   // a.ComposanteConnexe(0);
+
     int choix;
     int choixCentralite;
     int choixActionCentralite;
     int indiceSommet;
     std::string nom;
     std::string Newnom;
-   //a.dessinerSVG();
 
-
-  std::cout << "Bienvenue dans notre projet de theorie des graphes !" << std::endl << std::endl;
+    std::cout << "Bienvenue dans notre projet de theorie des graphes !" << std::endl << std::endl;
 
     do
     {
@@ -44,21 +39,19 @@ int main()
             break;
 
         case 1 :
+            system("cls");
             std::cout << "Entrez le nom du fichier que vous souhaitez charger : ";
             std::cin >> nom;
             std::cout << std::endl;
             a.remplirGraphe(nom);
-            system("cls");
-            std::cout << "Votre graphe est charge !" << std::endl << std::endl;
             break;
 
         case 2 :
+            system("cls");
             std::cout << "Entrez le nom du fichier contenant les ponderations : ";
             std::cin >> nom;
             std::cout << std::endl;
             a.lirePoids(nom);
-            system("cls");
-            std::cout << "Vos poids ont bien ete charge !" << std::endl << std::endl;
             break;
 
         case 3 :
@@ -95,7 +88,7 @@ int main()
 
                 case 2 :
                     system("cls");
-                    a.dessinerSVG();
+                    a.dessinerSVGDegre();
                     break;
 
                 case 3 :
@@ -125,7 +118,7 @@ int main()
 
                 case 2 :
                     system("cls");
-                    a.dessinerSVG();
+                    a.dessinerSVGVecteur();
                     break;
 
                 case 3 :
@@ -155,7 +148,7 @@ int main()
 
                 case 2 :
                     system("cls");
-                    a.dessinerSVG();
+                    a.dessinerSVGProximite();
                     break;
 
                 case 3 :
@@ -223,7 +216,7 @@ void menu()
 
     std::cout << "0) Quitter le programme" << std::endl;
     std::cout << "1) Charger un graphe (en entrant le nom du fichier)" << std::endl;
-    std::cout << "2) Charger le systeme de ponderation initiale (en entrant le nom du fichier" << std::endl;
+    std::cout << "2) Charger le systeme de ponderation initiale (en entrant le nom du fichier)" << std::endl;
     std::cout << "3) Gestion des indices de centralites (calculs, affichages, sauvergardes)" << std::endl;
     std::cout << "4) Test de la vulnerabilite" << std::endl;
     std::cout << "5) Changement du fichier de ponderation"<<std::endl<<std::endl;

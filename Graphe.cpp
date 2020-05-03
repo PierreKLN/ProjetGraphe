@@ -351,7 +351,6 @@ void Graphe::afficherCentraliteVecteurPropre()
     std::vector<float> vp;
     float sommeDegreSi = 0;
     float lambda;
-    std::vector<float> centraliteVecteur;
 
     for(unsigned int i=0; i<m_sommets.size(); i++)
     {
@@ -367,8 +366,8 @@ void Graphe::afficherCentraliteVecteurPropre()
 
     for (unsigned int i =0; i<m_sommets.size(); i++)
     {
-        centraliteVecteur.push_back(vp[i]/lambda); //Valeur de la centralite vecteur propre pour chaque sommet
-        std::cout << centraliteVecteur[i] << std::endl;
+        m_centraliteVecteur.push_back(vp[i]/lambda); //Valeur de la centralite vecteur propre pour chaque sommet
+        std::cout << m_centraliteVecteur[i] << std::endl;
     }
 }
 ///methode affichage indice de proximité
@@ -377,7 +376,7 @@ void Graphe::afficherCentraliteProximite()
     std::cout << "Affichage de l'indice de centralite de proximite" << std::endl << std::endl;
 
     double somme;
-    double indiceProximite=0;
+    double indiceProxiNormal;
 
     for (unsigned int i=0; i<m_sommets.size(); ++i)
     {
@@ -398,11 +397,11 @@ void Graphe::afficherCentraliteProximite()
         std::cout << "Somme des longueurs de tous les plus courts chemins " << somme << std::endl;
 
         ///l'indice de proximite est egal à k'inverse de la somme des poids sur les plus courts chemins
-        indiceProximite = 1/somme;
-        std::cout << "Indice de proximite pour le sommet " << i << " : " << indiceProximite << std::endl;
+        m_indiceProximite.push_back(1/somme);
+        std::cout << "Indice de proximite pour le sommet " << i << " : " << m_indiceProximite[i] << std::endl;
         ///l'indice de proximite normalisé est l'indice de proximité multiplié par n-1
-        indiceProximite = (m_sommets.size()-1)*indiceProximite;
-        std::cout<< "Indice de proximite normalise pour le sommet " << i << " : " << indiceProximite << std::endl;
+        indiceProxiNormal=((m_sommets.size()-1)*m_indiceProximite[i]) ;
+        std::cout<< "Indice de proximite normalise pour le sommet " << i << " : " << indiceProxiNormal<< std::endl;
         std::cout<< std::endl;
 
         ///remet le compteur a zero et la somme a zero pour ne pas fausser les sommes sur les autres sommets
@@ -412,6 +411,10 @@ void Graphe::afficherCentraliteProximite()
             somme = 0;
         }
         std::cout << std::endl;
+         for (unsigned int i=0; i<m_indiceProximite.size(); i++)
+        {
+               m_indiceProximite[i]=0;
+        }
     }
 }
 
@@ -440,62 +443,6 @@ void Graphe::afficherCentraliteIntermediarite(int IndiceSommet)
             somme2 = 0;
         }
         std::cout << std::endl;
-
-//int IndiceInter=0;
-        /*{
-                std::cout << "Sommet de depart " << i << std::endl << std::endl;
-
-                for (unsigned int j=0; j<m_sommets.size(); ++j)
-                {
-                    if(i!=j)
-                        initDijkstra(i,j);
-                }*/
-//        initDijkstra(0,1);
-//        initDijkstra(0,3);
-//        initDijkstra(0,4);
-//        initDijkstra(0,2);
-        /*     for (size_t i=0; i<m_stockSommet.size(); ++i)
-        {
-            m_stockSommet[i]=0;
-        }
-            initDijkstra(1,0);
-            initDijkstra(1,3);
-            initDijkstra(1,4);
-            initDijkstra(1,2);*/
-        /*initDijkstra(3,0);
-        initDijkstra(3,1);
-        initDijkstra(3,2);
-        initDijkstra(3,4);*/
-
-        /*for (unsigned int i=0; i<m_sommets.size(); ++i)
-        {
-        IndiceInter=0;
-            for(size_t k=0; k<m_stockSommet.size(); ++k)
-            {
-                if(m_sommets[i]->getIndice()==m_stockSommet[k]&&m_sommets[i]->getPrecedent()!=-1)
-                {
-                    IndiceInter++;
-                    m_sommets[i]->setInter(IndiceInter);
-                }
-            }
-
-            std::cout<<m_sommets[i]->getInter()<<std::endl;
-        }*/
-        //std::cout<<IndiceInter<<std::endl;
-        /*for(size_t i=0; i<m_sommets.size(); ++i)
-        {
-          for(size_t k=0; k<m_stockSommet.size(); ++k)
-          {
-              if(m_sommets[i]->getIndice()==m_stockSommet[k]&&m_sommets[i]->getPrecedent()!=-1)
-                         IndiceInter++;
-          }
-        }
-        std::cout<<IndiceInter;
-        //std::cout<<IndiceInter<<std::endl;
-        //std::list<int> indince;
-
-        //indice.insert(la connerie oauis);
-        //indince.count(2)//balance le i;*/
 
     }
 }
@@ -672,6 +619,7 @@ void Graphe::vulnerabilite()
     float sommeDegreSi = 0;
     float lambda;
     std::vector<float> centraliteVecteur;
+    int choix, choix2;
 
     SuppressionArete();
     std::cout<<"Classement indice degre avant supression d'une arrete: "<<std::endl;
@@ -733,14 +681,20 @@ void Graphe::vulnerabilite()
         file.pop();///on l'enleve de la file
     }
 
+std::cout<<"Souhiatez dessiner le nouveau SVG de centralite de Degre apres supression des arretes ?"<<std::endl;
+std::cout<<"1. Oui"<<std::endl;
+std::cout<<"2. Non"<<std::endl;
+std::cin>>choix;
 
-    // newAfficherCentraliteProxi();
+    if (choix ==1)
+      NewdessinerSVGDegre();
 
+      std::cout<<"Souhiatez dessiner le nouveau SVG de centralite de vecteur propre apres supression des arretes ?"<<std::endl;
+std::cout<<"1. Oui"<<std::endl;
+std::cout<<"2. Non"<<std::endl;
+std::cin>>choix2;
 
-
-}
-///methode pour dessiner en SVG
-void Graphe::dessinerSVG()
+if(choix2==1)
 {
     Svgfile svgout;
 
@@ -749,11 +703,12 @@ void Graphe::dessinerSVG()
         ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
         if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
         {
-            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*190,
-                           m_sommets[m_aretes[i]->getExt1()]->getY()*190,
-                           m_sommets[m_aretes[i]->getExt2()]->getX()*190,
-                           m_sommets[m_aretes[i]->getExt2()]->getY()*190,
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*115,
                            "orange");
+
         }
     }
     for(unsigned int i=0; i<m_sommets.size(); i++)
@@ -761,11 +716,11 @@ void Graphe::dessinerSVG()
         ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
         if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
         {
-            svgout.addDisk(m_sommets[i]->getX()*190,m_sommets[i]->getY()*190,20,"red");
-            svgout.addCircle(m_sommets[i]->getX()*190,m_sommets[i]->getY()*190,21, 2, "black");
-            svgout.addText(m_sommets[i]->getX()*190-5,m_sommets[i]->getY()*190+5,m_sommets[i]->getNom(),"black");
-            svgout.addText(m_sommets[i]->getX()*190-15,m_sommets[i]->getY()*190+15,m_sommets[i]->getIndice(),"black");
-            svgout.addText(m_sommets[i]->getX()*190-40,m_sommets[i]->getY()*190+40,m_sommets[i]->getNombreVoisins(),"black");
+            svgout.addDisk(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*115-5,m_sommets[i]->getY()*115+5,15, m_sommets[i]->getNom(), "black");
+            svgout.addText(m_sommets[i]->getX()*115-15,m_sommets[i]->getY()*115+40,10,"Vecteur propre: ", "black");
+            svgout.addText(m_sommets[i]->getX()*115+50,m_sommets[i]->getY()*115+40,10,centraliteVecteur[i],"black");
         }
     }
     for (unsigned int i=0; i<m_aretes.size(); i++)
@@ -787,11 +742,234 @@ void Graphe::dessinerSVG()
         {
             svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
             svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
-            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,m_sommets[i]->getNom(),"black");
-            svgout.addText(m_sommets[i]->getX()*20-13,m_sommets[i]->getY()*20+15,m_sommets[i]->getIndice(),"black");
-            svgout.addText(10,m_sommets[i]->getY()*10+15,"Centralite de degre du sommet ","black");
-            // svgout.addText(160,160,i,"black");
-            //svgout.addText(162,m_sommets[i]->getY()*10-15,m_sommets[i]->getNombreVoisins(),"black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+            svgout.addText(m_sommets[i]->getX()*20-15,m_sommets[i]->getY()*20+40,10,"Vecteur propre: ", "black");
+            svgout.addText(m_sommets[i]->getX()*20+50,m_sommets[i]->getY()*20+40,10,centraliteVecteur[i],"black");
+        }
+    }
+}
+}
+
+
+
+///methode pour dessiner en SVG
+void Graphe::dessinerSVGDegre()
+{
+    Svgfile svgout;
+
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*115,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*115-5,m_sommets[i]->getY()*115+5,15, m_sommets[i]->getNom(), "black");
+            svgout.addText(m_sommets[i]->getX()*115-15,m_sommets[i]->getY()*115+40,10,"Degre :", "black");
+            svgout.addText(m_sommets[i]->getX()*115+15,m_sommets[i]->getY()*115+40,10,m_sommets[i]->getNombreVoisins(),"black");
+        }
+    }
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///a l'inverse si les coordonées sont superieurs a 10, on multiplie par un coefficient inferieur
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*20,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///pareil pour placer les sommets
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
+            svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+             svgout.addText(m_sommets[i]->getX()*20-15,m_sommets[i]->getY()*20+40,10,"Degre :", "black");
+            svgout.addText(m_sommets[i]->getX()*20+15,m_sommets[i]->getY()*20+40,10,m_sommets[i]->getNombreVoisins(),"black");
+        }
+    }
+}
+void Graphe::dessinerSVGVecteur()
+{
+    Svgfile svgout;
+
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*115,
+                           "orange");
+
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*115-5,m_sommets[i]->getY()*115+5,15, m_sommets[i]->getNom(), "black");
+            svgout.addText(m_sommets[i]->getX()*115-15,m_sommets[i]->getY()*115+40,10,"Vecteur propre: ", "black");
+            svgout.addText(m_sommets[i]->getX()*115+50,m_sommets[i]->getY()*115+40,10,m_centraliteVecteur[i],"black");
+        }
+    }
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///a l'inverse si les coordonées sont superieurs a 10, on multiplie par un coefficient inferieur
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*20,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///pareil pour placer les sommets
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
+            svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+            svgout.addText(m_sommets[i]->getX()*20-15,m_sommets[i]->getY()*20+40,10,"Vecteur propre: ", "black");
+            svgout.addText(m_sommets[i]->getX()*20+50,m_sommets[i]->getY()*20+40,10,m_centraliteVecteur[i],"black");
+        }
+    }
+}
+void Graphe::dessinerSVGProximite()
+{
+    Svgfile svgout;
+
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*70,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*70,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*70,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*70,
+                           "orange");
+                         /*  svgout.addText(((m_sommets[m_aretes[i]->getExt1()]->getX()+m_sommets[m_aretes[i]->getExt2()]->getX())/2)*20,
+                            ((m_sommets[m_aretes[i]->getExt1()]->getY()+m_sommets[m_aretes[i]->getExt2()]->getY())/2)*20,
+                           10, retournePoids(m_sommets[m_aretes[i]->getExt1()]->getIndice(),m_sommets[m_aretes[i]->getExt2()]->getIndice()),
+                           "black");*/
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*70,m_sommets[i]->getY()*70,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*70,m_sommets[i]->getY()*70,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*70-5,m_sommets[i]->getY()*70+5,15, m_sommets[i]->getNom(), "black");
+            svgout.addText(m_sommets[i]->getX()*70-15,m_sommets[i]->getY()*70+40,10,"Centralité Proximite: ", "black");
+            svgout.addText(m_sommets[i]->getX()*70+50,m_sommets[i]->getY()*70+40,10,m_indiceProximite[i],"black");
+
+        }
+    }
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///a l'inverse si les coordonées sont superieurs a 10, on multiplie par un coefficient inferieur
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*20,
+                           "orange");
+            svgout.addText(((m_sommets[m_aretes[i]->getExt1()]->getX()+m_sommets[m_aretes[i]->getExt2()]->getX())/2)*20,
+                            ((m_sommets[m_aretes[i]->getExt1()]->getY()+m_sommets[m_aretes[i]->getExt2()]->getY())/2)*20,
+                           10, retournePoids(m_sommets[m_aretes[i]->getExt1()]->getIndice(),m_sommets[m_aretes[i]->getExt2()]->getIndice()),
+                           "black");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///pareil pour placer les sommets
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
+            svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+            svgout.addText(m_sommets[i]->getX()*20-40,m_sommets[i]->getY()*20+40,10,"Centralite Proximite : ", "black");
+            svgout.addText(m_sommets[i]->getX()*20+50,m_sommets[i]->getY()*20+40,10,m_indiceProximite[i],"black");
+        }
+    }
+}
+void Graphe::dessinerSVG()
+{
+    Svgfile svgout;
+
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*115,
+                           "orange");
+
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*115-5,m_sommets[i]->getY()*115+5,15, m_sommets[i]->getNom(), "black");
+        }
+    }
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///a l'inverse si les coordonées sont superieurs a 10, on multiplie par un coefficient inferieur
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*20,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///pareil pour placer les sommets
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
+            svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+
         }
     }
 }
@@ -944,11 +1122,59 @@ void Graphe::NewafficherDijkstra(unsigned int sommet, int indiceSommet)
     std::cout<<m_sommets[sommet]->getIndice()<<std::endl;
 
     m_stockSommet.push_back(mycount);
-
-
-
-
 }
+void Graphe::NewdessinerSVGDegre()
+{
+    Svgfile svgout;
 
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///si les coordonées sont inferrieurs a 10 dans le fichiers, on les multplies pour pouvoir placer les grpahes correctement
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*115,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*115,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///meme conditions pour placer les sommets et avoir la place de dessiner le graphe
+        if(m_sommets[i]->getX()<10 && m_sommets[i]->getY()<10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,20,"red");
+            svgout.addCircle(m_sommets[i]->getX()*115,m_sommets[i]->getY()*115,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*115-5,m_sommets[i]->getY()*115+5,15, m_sommets[i]->getNom(), "black");
+            svgout.addText(m_sommets[i]->getX()*115-15,m_sommets[i]->getY()*115+40,10,"Degre :", "black");
+            svgout.addText(m_sommets[i]->getX()*115+15,m_sommets[i]->getY()*115+40,10,m_sommets[i]->getNewNombreVoisins(),"black");
+        }
+    }
+    for (unsigned int i=0; i<m_aretes.size(); i++)
+    {
+        ///a l'inverse si les coordonées sont superieurs a 10, on multiplie par un coefficient inferieur
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addLine(m_sommets[m_aretes[i]->getExt1()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt1()]->getY()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getX()*20,
+                           m_sommets[m_aretes[i]->getExt2()]->getY()*20,
+                           "orange");
+        }
+    }
+    for(unsigned int i=0; i<m_sommets.size(); i++)
+    {
+        ///pareil pour placer les sommets
+        if(m_sommets[i]->getX()>=10 && m_sommets[i]->getY()>=10)
+        {
+            svgout.addDisk(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,20,"yellow");
+            svgout.addCircle(m_sommets[i]->getX()*20,m_sommets[i]->getY()*20,21, 2, "black");
+            svgout.addText(m_sommets[i]->getX()*20-5,m_sommets[i]->getY()*20+5,15, m_sommets[i]->getNom(),"black");
+             svgout.addText(m_sommets[i]->getX()*20-15,m_sommets[i]->getY()*20+40,10,"Degre :", "black");
+            svgout.addText(m_sommets[i]->getX()*20+15,m_sommets[i]->getY()*20+40,10,m_sommets[i]->getNewNombreVoisins(),"black");
+        }
+    }
+}
 
 
