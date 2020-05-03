@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <string>
+#include <list>
 
 #include "Sommet.h"
 #include "Arete.h"
@@ -22,41 +23,45 @@ class Graphe
         std::vector<Sommet*> m_sommets;
         std::vector<Arete*> m_aretes;
         std::vector <double> m_compteur;
+        std::vector <int> m_stockSommet;
+        std::list<int> m_indice;
 
     public :
 
-        Graphe(std::string nom);
-
+        Graphe();
         ~Graphe();
-
-        void lirePoids();
-
-        int getOrientation();
-        int getOrdre();
-        int getTaille();
-
-        int retournePoids(int a, int b);
-
-        int getNextSommet();
+        ///methode pour charger les differents poids et graphes
+        void remplirGraphe(std::string nom);
+        void lirePoids(std::string nom);
+        void lireNewPoids(std::string nom);
+        ///methodes pour faire fonctionner les differents dijkstra
         void initDijkstra(unsigned int debut, unsigned int fin);
+        void NewinitDijkstra(unsigned int debut, unsigned int fin, int IndiceSommet);
         void dijkstra(unsigned int debut, unsigned int fin);
-        void afficherTout(unsigned int sommet);
-        void recupSommePoids(unsigned int i);
-
-        void centraliteDegre();
-        void centraliteVecteurPropre();
-        void centraliteDijkstra();
-
+        void Newdijkstra(unsigned int debut, unsigned int fin, int IndiceSommet);
+        void afficherDijkstra(unsigned int sommet);
+        void NewafficherDijkstra(unsigned int sommet, int IndiceSommet);
+        int getNextSommet();
+        int newgetNextSommet();
+        ///methode pour l'affichage des differentes centralités
         void afficherCentraliteDegre();
         void afficherCentraliteVecteurPropre();
         void afficherCentraliteProximite();
+        void afficherCentraliteIntermediarite(int IndiceSommet);
+        ///methode pour la sauvegarde des differentes centralités
+        void sauvegardeCentraliteDegre();
+        void sauvegardeCentraliteVecteurPropre();
+        void sauvegardeCentraliteProximite();
+        void sauvegardeCentraliteIntermediarite();
 
-        void dessinerSVG(Svgfile &svgout);
 
-        void setCompteur(double i);
-        int CalculIndice(int &courtChemin, int num);
-
-        void centraliteIntermdiariteSimple(int indice);
+        int retournePoids(int a, int b);
+        void vulnerabilite();
+        void SuppressionArete();
+        void parcoursBFS(int depart);
+        void afficherCompoConnexe(Sommet *sommet);
+        void dessinerSVG();
+        void afficherGraphe();
 
 
 };

@@ -1,15 +1,15 @@
 Tri par ordre de degres
 
-Indice du sommet C : 2 de degre 4
 Indice du sommet A : 0 de degre 1
 Indice du sommet B : 1 de degre 1
+Indice du sommet C : 2 de degre 4
 Indice du sommet D : 3 de degre 1
 Indice du sommet E : 4 de degre 1
 
 Indice de centralite des degres normalise (division les degres par n-1)
 
-Indice du sommet C : 2 de norme 1
 Indice du sommet A : 0 de norme 0.25
 Indice du sommet B : 1 de norme 0.25
+Indice du sommet C : 2 de norme 1
 Indice du sommet D : 3 de norme 0.25
 Indice du sommet E : 4 de norme 0.25

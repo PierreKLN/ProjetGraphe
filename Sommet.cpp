@@ -2,7 +2,7 @@
 
 #include "Sommet.h"
 
-Sommet::Sommet():m_precedent{-1}
+Sommet::Sommet():m_precedent{-1}, m_couleur{0}
 {
 
 }
@@ -51,9 +51,18 @@ float Sommet::getNombreVoisins()
     return m_adjacents.size();
 }
 
+float Sommet::getNewNombreVoisins()
+{
+    return m_NewAdja.size();
+}
+
 int Sommet::getIndiceAdjacence(int i)
 {
     return m_adjacents[i];
+}
+int Sommet::getNewIndiceAdja(int i)
+{
+    return m_NewAdja[i];
 }
 
 void Sommet::setIndice(int indice)
@@ -84,6 +93,10 @@ void Sommet::setPrecedent(int precedent)
 {
     m_precedent = precedent;
 }
+void Sommet::ajouterSuivant(int indice)
+{
+    m_suivant.push_back(indice);
+}
 
 void Sommet::setVisite(bool visite)
 {
@@ -93,6 +106,10 @@ void Sommet::setVisite(bool visite)
 void Sommet::setAdjacent(int indice)
 {
     m_adjacents.push_back(indice);
+}
+void Sommet::setNewAdja (int indice)
+{
+    m_NewAdja.push_back(indice);
 }
 
 void Sommet::setPoids(int poids)
@@ -111,9 +128,22 @@ void Sommet::afficherSommet()
     {
         std::cout << m_adjacents[i] << std::endl;
     }
-    for (unsigned int i=0;i<m_poids.size();i++)
-    {
-        std::cout << m_poids[i] << std::endl;
-    }
     std::cout << std::endl;
+}
+
+void Sommet::setCouleur(int couleur)
+{
+    m_couleur=couleur;
+}
+int Sommet::getCouleur()
+{
+    return m_couleur;
+}
+void Sommet::setInter(int inter)
+{
+    m_inter=inter;
+}
+int Sommet::getInter()
+{
+    return m_inter;
 }
