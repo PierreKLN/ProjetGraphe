@@ -29,6 +29,7 @@ class Svgfile
         void addCross(double x, double y, double span, std::string color=defcol);
 
         void addText(double x, double y, std::string text, std::string color=defcol);
+        void addText(double x, double y, int text, std::string color);
 
         void addGrid(double span=100.0, bool numbering=true, std::string color="lightgrey");
 

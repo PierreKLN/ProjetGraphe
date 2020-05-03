@@ -932,11 +932,7 @@ void Graphe::NewafficherDijkstra(unsigned int sommet, int indiceSommet)
         std::cout<<m_sommets[sommet]->getIndice()<<"<---";
         ///sommet prends la valeur du sommet precedet a ce dernier
         sommet = m_sommets[sommet]->getPrecedent();
-        ///on ajoute les poids des arretes sur les plus courts chemins dans le tableau compteur
-        compteur.push_back(retournePoids(m_sommets[copieFin]->getIndice(),m_sommets[copieFin]->getPrecedent()));
-
-
-          indice.insert(indice.begin(), m_sommets[copieFin]->getPrecedent());
+        indice.insert(indice.begin(), m_sommets[copieFin]->getPrecedent());
         ///comme pour sommet, copiefin prends la valeur du predecesseur de copiefin actuel
         copieFin = m_sommets[copieFin]->getPrecedent();
         mycount = std::count (indice.begin(), indice.end(), indiceSommet);
