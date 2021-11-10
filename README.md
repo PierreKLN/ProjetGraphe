@@ -16,7 +16,7 @@ Utilisant des .svg pour le rendu graphique.
 * Changer le système de pondérations d’un graphe (en chargeant un nouveau fichier de pondérations)
 * Calculer, afficher et sauvegarder les différents indices de centralité.
 * Tester la vulnérabilité du graphe en:
-      * permettant de supprimer une ou plusieurs arêtes choisies par l’utilisateur
+      1. permettant de supprimer une ou plusieurs arêtes choisies par l’utilisateur
       * testant la connexité du graphe suite à la suppression de ces arêtes
       * recalculant les indices de centralités pour les comparer avec ceux obtenus avant la suppression.
 * Amélioration de l'affichage de départ en console (svg output)
