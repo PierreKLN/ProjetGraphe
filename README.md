@@ -15,10 +15,10 @@ Utilisant des .svg pour le rendu graphique.
 * Charger un graphe (donc le fichier de topologie et éventuellement un fichier de pondérations) en demandant les noms de fichiers à l’utilisateur.
 * Changer le système de pondérations d’un graphe (en chargeant un nouveau fichier de pondérations)
 * Calculer, afficher et sauvegarder les différents indices de centralité.
-* Tester la vulnérabilité du graphe en:
-      \1. permettant de supprimer une ou plusieurs arêtes choisies par l’utilisateur
-      2. testant la connexité du graphe suite à la suppression de ces arêtes
-      3. recalculant les indices de centralités pour les comparer avec ceux obtenus avant la suppression.
+* Tester la vulnérabilité du graphe en:  return
+      1. permettant de supprimer une ou plusieurs arêtes choisies par l’utilisateur  return
+      2. testant la connexité du graphe suite à la suppression de ces arêtes  return
+      3. recalculant les indices de centralités pour les comparer avec ceux obtenus avant la suppression  return
 * Amélioration de l'affichage de départ en console (svg output)
 * Système de couleurs permettant de discrimer les sommets en fonction de leur importance mesurée par ces indices
 * Calculer les indices de centralité d’intermédiarité des arêtes et pas seulement des sommets.
