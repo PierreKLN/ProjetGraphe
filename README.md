@@ -17,8 +17,8 @@ Utilisant des .svg pour le rendu graphique.
 * Calculer, afficher et sauvegarder les différents indices de centralité.
 * Tester la vulnérabilité du graphe en:
       1. permettant de supprimer une ou plusieurs arêtes choisies par l’utilisateur
-      * testant la connexité du graphe suite à la suppression de ces arêtes
-      * recalculant les indices de centralités pour les comparer avec ceux obtenus avant la suppression.
+      2. testant la connexité du graphe suite à la suppression de ces arêtes
+      3. recalculant les indices de centralités pour les comparer avec ceux obtenus avant la suppression.
 * Amélioration de l'affichage de départ en console (svg output)
 * Système de couleurs permettant de discrimer les sommets en fonction de leur importance mesurée par ces indices
 * Calculer les indices de centralité d’intermédiarité des arêtes et pas seulement des sommets.
